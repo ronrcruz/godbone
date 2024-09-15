@@ -371,36 +371,42 @@
             newAddressInfo.classList.add('hidden');
         });
     </script>
- <script>
-    document.getElementById('paymentForm').addEventListener('submit', async function(e) {
-        e.preventDefault(); // Prevent the default form submission
-    
-        try {
-            // Collect form data
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData.entries());
-    
-            // Send data to your Netlify function
-            const response = await fetch('/.netlify/functions/saveFormData', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-    
-            if (!response.ok) {
-                throw new Error('Failed to submit payment');
+    <script>
+        document.getElementById('paymentForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+        
+            const submitButton = this.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Processing...';
+        
+            try {
+                const formData = new FormData(this);
+                const data = Object.fromEntries(formData.entries());
+        
+                const response = await fetch('/.netlify/functions/saveFormData', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+        
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to submit form');
+                }
+        
+                // If successful, redirect to the confirmation page
+                window.location.href = '/confirmation.html';
+        
+            } catch (error) {
+                console.error('Error:', error);
+                alert('There was an error processing your form: ' + error.message);
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Submit Form';
             }
-    
-            // If successful, redirect to the confirmation page
-            window.location.href = '/confirmation.html';
-    
-        } catch (error) {
-            console.error('Error:', error);
-            alert('There was an error processing your payment. Please try again.');
-        }
-    });
+        });
     </script>
 </body>
 </html>
