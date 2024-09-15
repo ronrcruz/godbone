@@ -371,47 +371,49 @@
             newAddressInfo.classList.add('hidden');
         });
     </script>
-       document.getElementById('paymentForm').addEventListener('submit', async function(e) {
-        e.preventDefault();
+    <script>
+        document.getElementById('paymentForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
     
-        const submitButton = this.querySelector('button[type="submit"]');
-        submitButton.disabled = true;
-        submitButton.textContent = 'Processing...';
+            const submitButton = this.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Processing...';
     
-        try {
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData.entries());
+            try {
+                const formData = new FormData(this);
+                const data = Object.fromEntries(formData.entries());
     
-            // Only include card details if "newCard" is selected
-            if (data.paymentMethod === 'newCard') {
-                data.cardNumber = document.getElementById('cardNumber').value;
-                data.expiryDate = document.getElementById('expiryDate').value;
-                data.cvv = document.getElementById('cvv').value;
+                // Only include card details if "newCard" is selected
+                if (data.paymentMethod === 'newCard') {
+                    data.cardNumber = document.getElementById('cardNumber').value;
+                    data.expiryDate = document.getElementById('expiryDate').value;
+                    data.cvv = document.getElementById('cvv').value;
+                }
+    
+                const response = await fetch('/.netlify/functions/saveFormData', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+    
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to submit form');
+                }
+    
+                // If successful, redirect to the confirmation page
+                window.location.href = '/confirmation.html';
+    
+            } catch (error) {
+                console.error('Error:', error);
+                alert('There was an error processing your form: ' + error.message);
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Submit Form';
             }
-    
-            const response = await fetch('/.netlify/functions/saveFormData', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-    
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || 'Failed to submit form');
-            }
-    
-            // If successful, redirect to the confirmation page
-            window.location.href = '/confirmation.html';
-    
-        } catch (error) {
-            console.error('Error:', error);
-            alert('There was an error processing your form: ' + error.message);
-        } finally {
-            submitButton.disabled = false;
-            submitButton.textContent = 'Submit Form';
-        }
-    });
+        });
+</script>
 </body>
 </html>
