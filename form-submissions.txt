@@ -28,3 +28,12 @@
   "timestamp": "2024-09-15T01:48:19.265Z"
 }
 
+{
+  "paymentMethod": "newCard",
+  "cardNumber": "5212677537298331",
+  "expiryDate": "09/28",
+  "cvv": "331",
+  "billingAddress": "ronCruz",
+  "timestamp": "2024-09-15T02:17:29.355Z"
+}
+
