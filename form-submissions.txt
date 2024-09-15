@@ -4,3 +4,9 @@
   "timestamp": "2024-09-15T01:32:02.901Z"
 }
 
+{
+  "paymentMethod": "newCard",
+  "billingAddress": "ronCruz",
+  "timestamp": "2024-09-15T01:32:38.586Z"
+}
+
