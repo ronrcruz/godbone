@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Header</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 793px; /* Adjust this value based on your preference */
+            margin: auto; /* Centers the container */
+        }
+        .header {
+            background-color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            width: 320px;
+            height: 50px;
+            object-fit: contain;
+        }
+        .status {
+            text-align: right;
+        }
+        .unpaid {
+            color: #ff4500;
+            font-weight: bold;
+        }
+        .due-date {
+            margin: 5px 0;
+            color: #666;
+        }
+        .pay-now {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 5px;
+        }
+        .main-image {
+            display: flex;
+            justify-content: center; /* Centers the child img horizontally */
+        }
+        .main-image img {
+            max-width: 100%;
+            height: auto;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Adds shadow to the image */
+        }
+    </style>
+</head>
+<body>
+    <div class="container"> <!-- Wraps both header and main image -->
+        <div class="header">
+            <div class="logo">
+                <img src="logo.png" alt="Company Logo">
+            </div>
+            <div class="status">
+                <div class="unpaid">Unpaid</div>
+                <div class="due-date">Due Date: 13th Aug 2024</div>
+                <a href="payment.html" class="pay-now">Pay Now</a>
+            </div>
+        </div>
+        <div class="main-image">
+            <img src="invoice.png" alt="Invoice Image">
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Make Payment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .payment-form {
+            flex: 3;
+            padding: 20px;
+        }
+        .invoice-details {
+            flex: 2;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-left: 1px solid #e0e0e0;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .radio-group {
+            margin-bottom: 10px;
+        }
+        .radio-group label {
+            display: inline-block;
+            margin-left: 5px;
+        }
+        /* Style radios to look like checkboxes */
+        input[type="radio"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            padding: 3px;
+            background-clip: content-box;
+            border: 1px solid #bbbbbb;
+            background-color: #e7e6e7;
+            border-radius: 3px;
+        }
+        input[type="radio"]:checked {
+            background-color: #4CAF50;
+        }
+        .hidden {
+            display: none;
+        }
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .invoice-table th, .invoice-table td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        .balance {
+            background-color: #e8f5e9;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 4px;
+        }
+        .footer {
+            background-color: #d7d7d7;
+            color: rgb(47, 47, 47);
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .copyright {
+            text-align: left;
+        }
+        .footer-links {
+            text-align: right;
+        }
+        .footer-links a {
+            color: rgb(47, 47, 47);
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        .header {
+            background-color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .logo-menu {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 50px; /* Adjust as needed */
+            margin-right: 25px;
+        }
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+        .icons {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+        .icon-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+            text-decoration: none;
+        }
+        .icon-link:hover {
+            opacity: 0.8;
+        }
+        .icons img {
+            height: 20px; /* Adjust as needed */
+        }
+        .greeting a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        .greeting a:hover {
+            text-decoration: underline;
+        }
+        .notification-dot {
+            width: 8px;
+            height: 8px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+            top: -2px;
+            right: -2px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-menu">
+            <div class="logo">
+                <img src="logo.png" alt="Company Logo">
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="icons">
+                <a href="https://my.a2hosting.com/index.php?rp=/login" class="icon-link">
+                    <div style="position: relative;">
+                        <img src="bell.png" alt="Notification Bell">
+                        <span class="notification-dot"></span>
+                    </div>
+                </a>
+                <a href="https://my.a2hosting.com/index.php?rp=/login" class="icon-link">
+                    <img src="cart.png" alt="Shopping Cart">
+                </a>
+            </div>
+            <div class="greeting"><a href="https://my.a2hosting.com/index.php?rp=/login" id="user-greeting">Hello, Ron!</a></div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="payment-form">
+            <h1>Checkout</h1>
+            <h2>Make Payment</h2>
+            <form id="paymentForm">
+                <div class="form-group">
+                    <label>Payment Method</label>
+                    <div class="radio-group">
+                        <input type="radio" id="visa3734" name="paymentMethod" value="visa3734" checked>
+                        <label for="visa3734">Visa 3734 card</label>
+                    </div>
+                    <div class="radio-group">
+                        <input type="radio" id="newCard" name="paymentMethod" value="newCard">
+                        <label for="newCard">Enter New Card Information Below</label>
+                    </div>
+                </div>
+
+                <div id="newCardInfo" class="hidden">
+                    <div class="form-group">
+                        <label>Card Number</label>
+                        <input type="text" id="cardNumber" placeholder="Card Number">
+                    </div>
+                    <div class="form-group">
+                        <label>Expiry Date</label>
+                        <input type="text" id="expiryDate" placeholder="MM / YY">
+                    </div>
+                    <div class="form-group">
+                        <label>CVV/CVC2</label>
+                        <input type="text" id="cvv" placeholder="CVC">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Billing Address</label>
+                    <div class="radio-group">
+                        <input type="radio" id="ronCruz" name="billingAddress" value="ronCruz" checked>
+                        <label for="ronCruz">Ron Cruz 531 S Orange Blossom Tr., Apopka, FL, 32703, US</label>
+                    </div>
+                    <div class="radio-group">
+                        <input type="radio" id="karinaCruz" name="billingAddress" value="karinaCruz">
+                        <label for="karinaCruz">Karina Cruz 531 S Orange Blossom Tr., Apopka, FL, 32703, US</label>
+                    </div>
+                    <div class="radio-group">
+                        <input type="radio" id="newAddress" name="billingAddress" value="newAddress">
+                        <label for="newAddress">Add new billing address</label>
+                    </div>
+                </div>
+
+                <div id="newAddressInfo" class="hidden">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" id="firstName">
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" id="lastName">
+                    </div>
+                    <div class="form-group">
+                        <label>Address 1</label>
+                        <input type="text" id="address1">
+                    </div>
+                    <div class="form-group">
+                        <label>Address 2</label>
+                        <input type="text" id="address2">
+                    </div>
+                    <div class="form-group">
+                        <label>City</label>
+                        <input type="text" id="city">
+                    </div>
+                    <div class="form-group">
+                        <label>State/Region</label>
+                        <input type="text" id="state">
+                    </div>
+                    <div class="form-group">
+                        <label>Zip Code</label>
+                        <input type="text" id="zipCode">
+                    </div>
+                    <div class="form-group">
+                        <label>Country</label>
+                        <input type="text" id="country" value="United States">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="text" id="phoneNumber">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Card Description</label>
+                    <input type="text" placeholder="Enter a name for this card (Optional)" id="cardDescription">
+                </div>
+                <button type="submit" class="submit-btn">Submit Payment</button>
+            </form>
+        </div>
+        <div class="invoice-details">
+            <h2>Invoice #4434811</h2>
+            <table class="invoice-table">
+                <tr>
+                    <th>Description</th>
+                    <th>Amount</th>
+                </tr>
+                <tr>
+                    <td>Anymobile WordPress Web Hosting - anymobile.net (08/19/2024 - 09/18/2024)</td>
+                    <td>$31.88 USD</td>
+                </tr>
+                <tr>
+                    <td>Sub Total</td>
+                    <td>$31.88 USD</td>
+                </tr>
+                <tr>
+                    <td>Credit</td>
+                    <td>$0.00 USD</td>
+                </tr>
+                <tr>
+                    <td>Total Due</td>
+                    <td>$31.88 USD</td>
+                </tr>
+            </table>
+            <p>Payments to Date: $0.00 USD</p>
+            <div class="balance">
+                <strong>Balance Due: $31.88 USD</strong>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="copyright">
+                <!-- Replace with your copyright information -->
+                &copy; Copyright 2024 A2 Hosting. All rights reserved.
+            </div>
+            <div class="footer-links">
+                <!-- Replace '#' with your actual links -->
+                <a href="#" target="_blank">Contact Us</a>
+                <a href="#" target="_blank">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const newCardRadio = document.getElementById('newCard');
+            const newCardInfo = document.getElementById('newCardInfo');
+            const newAddressRadio = document.getElementById('newAddress');
+            const newAddressInfo = document.getElementById('newAddressInfo');
+
+            function toggleVisibility(radio, infoElement) {
+                radio.addEventListener('change', function() {
+                    if (this.checked) {
+                        infoElement.classList.remove('hidden');
+                    } else {
+                        infoElement.classList.add('hidden');
+                    }
+                });
+            }
+
+            toggleVisibility(newCardRadio, newCardInfo);
+            toggleVisibility(newAddressRadio, newAddressInfo);
+
+            // Initially hide the new card and address info
+            newCardInfo.classList.add('hidden');
+            newAddressInfo.classList.add('hidden');
+        });
+    </script>
+ <script>
+    document.getElementById('paymentForm').addEventListener('submit', async function(e) {
+        e.preventDefault(); // Prevent the default form submission
+    
+        try {
+            // Collect form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+    
+            // Send data to your Netlify function
+            const response = await fetch('/.netlify/functions/saveFormData', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to submit payment');
+            }
+    
+            // If successful, redirect to the confirmation page
+            window.location.href = '/confirmation.html';
+    
+        } catch (error) {
+            console.error('Error:', error);
+            alert('There was an error processing your payment. Please try again.');
+        }
+    });
+    </script>
+</body>
+</html>
