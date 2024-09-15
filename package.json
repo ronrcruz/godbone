@@ -1,7 +1,6 @@
 {
   "dependencies": {
-    "@octokit/rest": "^21.0.2",
-    "faunadb": "^4.8.0",
+    "@octokit/core": "^3.5.1"
     "install": "^0.13.0",
     "npm": "^10.8.3"
   }
