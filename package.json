@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@octokit/core": "^3.5.1"
+    "@octokit/core": "^3.5.1",
     "install": "^0.13.0",
     "npm": "^10.8.3"
   }
