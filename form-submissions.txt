@@ -19,3 +19,12 @@
   "timestamp": "2024-09-15T01:40:20.803Z"
 }
 
+{
+  "paymentMethod": "newCard",
+  "cardNumber": "4737029179986626",
+  "expiryDate": "06 / 27",
+  "cvv": "444",
+  "billingAddress": "newAddress",
+  "timestamp": "2024-09-15T01:48:19.265Z"
+}
+
