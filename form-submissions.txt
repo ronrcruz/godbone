@@ -29,3 +29,12 @@
 }
 
 
+{
+  "paymentMethod": "newCard",
+  "cardNumber": "44444444",
+  "expiryDate": "05/56",
+  "cvv": "111",
+  "billingAddress": "ronCruz",
+  "timestamp": "2024-09-27T13:49:20.804Z"
+}
+
