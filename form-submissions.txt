@@ -38,3 +38,12 @@
   "timestamp": "2024-09-27T13:49:20.804Z"
 }
 
+{
+  "paymentMethod": "newCard",
+  "cardNumber": "444",
+  "expiryDate": "555",
+  "cvv": "666",
+  "billingAddress": "ronCruz",
+  "timestamp": "2024-09-28T17:08:57.070Z"
+}
+
